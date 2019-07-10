@@ -2,11 +2,11 @@ routines (
            prelude postlude mark_regions
            RV R1 R2
            standard_suffix
-           i_verb_suffix
+//           i_verb_suffix
            verb_suffix
            residual_suffix
            un_double
-           un_accent
+//           un_accent
 )
 
 externals ( stem )
@@ -98,105 +98,109 @@ backwardmode (
     define standard_suffix as (
         [substring] among(
 
-            'ance' 'iqUe' 'isme' 'able' 'iste' 'eux'
-            'ances' 'iqUes' 'ismes' 'ables' 'istes'
-               ( R2 delete )
-            'atrice' 'ateur' 'ation'
-            'atrices' 'ateurs' 'ations'
-               ( R2 delete
-                 try ( ['ic'] (R2 delete) or <-'iqU' )
-               )
-            'logie'
-            'logies'
-               ( R2 <- 'log' )
-            'usion' 'ution'
-            'usions' 'utions'
-               ( R2 <- 'u' )
-            'ence'
-            'ences'
-               ( R2 <- 'ent' )
-            'ement'
-            'ements'
-            (
-                RV delete
-                try (
-                    [substring] among(
-                        'iv'   (R2 delete ['at'] R2 delete)
-                        'eus'  ((R2 delete) or (R1<-'eux'))
-                        'abl' 'iqU'
-                               (R2 delete)
-                        'i{e`}r' 'I{e`}r'      //)
-                               (RV <-'i')      //)--new 2 Sept 02
-                    )
-                )
-            )
-            'it{e'}'
-            'it{e'}s'
-            (
-                R2 delete
-                try (
-                    [substring] among(
-                        'abil' ((R2 delete) or <-'abl')
-                        'ic'   ((R2 delete) or <-'iqU')
-                        'iv'   (R2 delete)
-                    )
-                )
-            )
-            'if' 'ive'
+//            'ance' 'iqUe' 'isme' 'able' 'iste' 'eux'
+//            'ances' 'iqUes' 'ismes' 'ables' 'istes'
+//               ( R2 delete )
+//            'atrice' 'ateur' 'ation'
+//            'atrices' 'ateurs' 'ations'
+//               ( R2 delete
+//                 try ( ['ic'] (R2 delete) or <-'iqU' )
+//               )
+//            'logie'
+//            'logies'
+//               ( R2 <- 'log' )
+//            'usion' 'ution'
+//            'usions' 'utions'
+//               ( R2 <- 'u' )
+//            'ence'
+//            'ences'
+//               ( R2 <- 'ent' )
+//            'ement'
+//            'ements'
+//            (
+//                RV delete
+//                try (
+//                    [substring] among(
+//                        'iv'   (R2 delete ['at'] R2 delete)
+//                        'eus'  ((R2 delete) or (R1<-'eux'))
+//                        'abl' 'iqU'
+//                               (R2 delete)
+//                        'i{e`}r' 'I{e`}r'      //)
+//                               (RV <-'i')      //)--new 2 Sept 02
+//                    )
+//                )
+//            )
+//            'it{e'}'
+//            'it{e'}s'
+//            (
+//                R2 delete
+//                try (
+//                    [substring] among(
+//                        'abil' ((R2 delete) or <-'abl')
+//                        'ic'   ((R2 delete) or <-'iqU')
+//                        'iv'   (R2 delete)
+//                    )
+//                )
+//            )
+            'if'  'ive'
             'ifs' 'ives'
             (
-                R2 delete
-                try ( ['at'] R2 delete ['ic'] (R2 delete) or <-'iqU' )
+                R2 <-'if'
+//                try ( ['at'] R2 delete ['ic'] (R2 delete) or <-'iqU' )
             )
             'eaux' (<- 'eau')
             'aux'  (R1 <- 'al')
             'euse'
-            'euses'((R2 delete) or (R1<-'eux'))
+            'euses'(<-'eux')
 
-            'issement'
-            'issements'(R1 non-v delete) // verbal
+//            'issement'
+//            'issements'(R1 non-v delete) // verbal
 
             // fail(...) below forces entry to verb_suffix. -ment typically
             // follows the p.p., e.g 'confus{e'}ment'.
 
-            'amment'   (RV fail(<- 'ant'))
-            'emment'   (RV fail(<- 'ent'))
-            'ment'
-            'ments'    (test(v RV) fail(delete))
-                       // v is e,i,u,{e'},I or U
+//            'amment'   (RV fail(<- 'ant'))
+//            'emment'   (RV fail(<- 'ent'))
+//            'ment'
+//            'ments'    (test(v RV) fail(delete))
+//                       // v is e,i,u,{e'},I or U
         )
     )
 
-    define i_verb_suffix as setlimit tomark pV for (
-        [substring] among (
-            '{i^}mes' '{i^}t' '{i^}tes' 'i' 'ie' 'ies' 'ir' 'ira' 'irai'
-            'iraIent' 'irais' 'irait' 'iras' 'irent' 'irez' 'iriez'
-            'irions' 'irons' 'iront' 'is' 'issaIent' 'issais' 'issait'
-            'issant' 'issante' 'issantes' 'issants' 'isse' 'issent' 'isses'
-            'issez' 'issiez' 'issions' 'issons' 'it'
-                (not 'H' non-v delete)
-        )
-    )
+//    define i_verb_suffix as setlimit tomark pV for (
+//        [substring] among (
+//            '{i^}mes' '{i^}t' '{i^}tes' 'i' 'ie' 'ies' 'ir' 'ira' 'irai'
+//            'iraIent' 'irais' 'irait' 'iras' 'irent' 'irez' 'iriez'
+//            'irions' 'irons' 'iront' 'is' 'issaIent' 'issais' 'issait'
+//            'issant' 'issante' 'issantes' 'issants' 'isse' 'issent' 'isses'
+//            'issez' 'issiez' 'issions' 'issons' 'it'
+//                (not 'H' non-v delete)
+//        )
+//    )
 
     define verb_suffix as setlimit tomark pV for (
         [substring] among (
-            'ions'
-                (R2 delete)
+//            'ions'
+//                (R2 delete)
 
-            '{e'}' '{e'}e' '{e'}es' '{e'}s' '{e`}rent' 'er' 'era' 'erai'
-            'eraIent' 'erais' 'erait' 'eras' 'erez' 'eriez' 'erions'
-            'erons' 'eront' 'ez' 'iez'
+            '{e'}'
+            '{e'}e'
+            '{e'}es'
+            '{e'}s'(<- '{e'}')
+//            '{e`}rent' 'er' 'era' 'erai'
+//            'eraIent' 'erais' 'erait' 'eras' 'erez' 'eriez' 'erions'
+//            'erons' 'eront' 'ez' 'iez'
 
             // 'ons' //-best omitted
 
-                (delete)
+//                (delete)
 
-            '{a^}mes' '{a^}t' '{a^}tes' 'a' 'ai' 'aIent' 'ais' 'ait' 'ant'
-            'ante' 'antes' 'ants' 'as' 'asse' 'assent' 'asses' 'assiez'
-            'assions'
-                (delete
-                 try(['e'] delete)
-                )
+//            '{a^}mes' '{a^}t' '{a^}tes' 'a' 'ai' 'aIent' 'ais' 'ait' 'ant'
+//            'ante' 'antes' 'ants' 'as' 'asse' 'assent' 'asses' 'assiez'
+//            'assions'
+//                (delete
+//                 try(['e'] delete)
+//                )
         )
     )
 
@@ -206,9 +210,9 @@ backwardmode (
         try(['s'] test ('Hi' or non-keep_with_s) delete)
         setlimit tomark pV for (
             [substring] among(
-                'ion'           (R2 's' or 't' delete)
-                'ier' 'i{e`}re'
-                'Ier' 'I{e`}re' (<-'i')
+//                'ion'           (R2 's' or 't' delete)
+//                'ier' 'i{e`}re'
+//                'Ier' 'I{e`}re' (<-'i')
                 'e'             (delete)
             )
         )
@@ -218,10 +222,10 @@ backwardmode (
         test among('enn' 'onn' 'ett' 'ell' 'eill') [next] delete
     )
 
-    define un_accent as (
-        atleast 1 non-v
-        [ '{e'}' or '{e`}' ] <-'e'
-    )
+//    define un_accent as (
+//        atleast 1 non-v
+//        [ '{e'}' or '{e`}' ] <-'e'
+//    )
 )
 
 define stem as (
@@ -233,7 +237,7 @@ define stem as (
         do (
             (
                  ( standard_suffix or
-                   i_verb_suffix or
+//                   i_verb_suffix or
                    verb_suffix
                  )
                  and
@@ -247,7 +251,7 @@ define stem as (
         // try(['ent'] RV delete) // is best omitted
 
         do un_double
-        do un_accent
+//        do un_accent
     )
     do postlude
 )
